@@ -1,8 +1,34 @@
+import { useState } from "react";
 import Chat from "../../components/chat/Chat";
 import List from "../../components/list/List";
 import "./profilePage.scss";
+import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogOut = async () => {
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch(`http://localhost:8800/api/auth/logout`, {
+        method: "POST",
+      });
+      if (res.ok) {
+        localStorage.removeItem("user");
+        navigate("/");
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="profilePage">
       <div className="details">
@@ -25,6 +51,20 @@ function ProfilePage() {
             <span>
               E-mail: <b>john@gmail.com</b>
             </span>
+            <button disabled={isLoading} onClick={handleLogOut}>
+              LogOut
+            </button>
+            {error && (
+              <span
+                style={{
+                  color: "red",
+                  fontWeight: "500",
+                  fontSize: "small",
+                }}
+              >
+                {error}
+              </span>
+            )}
           </div>
           <div className="title">
             <h1>My List</h1>
@@ -39,7 +79,7 @@ function ProfilePage() {
       </div>
       <div className="chatContainer">
         <div className="wrapper">
-          <Chat/>
+          <Chat />
         </div>
       </div>
     </div>

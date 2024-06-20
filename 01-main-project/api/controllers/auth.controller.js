@@ -50,14 +50,14 @@ export const login = async (req, res, next) => {
       process.env.JWT_SECRET_KEY,
       { expiresIn: age }
     );
-
+    const { password: userPassword, ...rest } = user;
     res
       .cookie("TOKEN", token, {
         httpOnly: true,
         // secure: true,
         maxAge: age,
       })
-      .json({ message: "Login Successfull" });
+      .json(rest);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Failed to LogIn!" });
