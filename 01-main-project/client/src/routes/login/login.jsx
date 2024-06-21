@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 function Login() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const { updateUser } = useContext(AuthContext);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -27,13 +31,14 @@ function Login() {
       });
       const data = await res.json();
       if (res.ok) {
-        localStorage.setItem("user", JSON.stringify(data));
+        updateUser(data);
         navigate("/");
+        console.log(data);
       } else {
         setError(data.message);
       }
     } catch (error) {
-      setError(error.response.data.message);
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }
