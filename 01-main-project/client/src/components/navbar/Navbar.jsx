@@ -1,50 +1,57 @@
 import { useContext, useState } from "react";
 import "./navbar.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-
   const { currentUser } = useContext(AuthContext);
+  const location = useLocation();
 
-  const user = true;
+  const user = currentUser !== null;
+
   return (
     <nav>
       <div className="left">
-        <a href="/" className="logo">
+        <Link href="/" className="logo">
           <img src="/logo.png" alt="" />
           <span>LamaEstate</span>
-        </a>
-        <a href="/">Home</a>
-        <a href="/">About</a>
-        <a href="/">Contact</a>
-        <a href="/">Agents</a>
+        </Link>
+        <Link to="/">Home</Link>
+        <Link href="/">About</Link>
+        <Link href="/">Contact</Link>
+        <Link href="/">Agents</Link>
       </div>
       <div className="right">
         {user ? (
           <div className="user">
             <img
               src={
-                currentUser.avatart
-                  ? currentUser.avatart
+                currentUser.avatar != null
+                  ? currentUser.avatar
                   : "https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg?size=626&ext=jpg&ga=GA1.1.1757842217.1718464723&semt=ais_user"
               }
               alt=""
             />
-            <span>{currentUser.username}</span>
-            <Link to="/profile" className="profile">
-              <div className="notification">3</div>
-              <span>Profile</span>
-            </Link>
+            <span style={{ marginRight: "15px" }}>{currentUser.username}</span>
+            {location.pathname != "/profile" ? (
+              <Link to="/profile" className="profile">
+                <div className="notification">3</div>
+                <span>Profile</span>
+              </Link>
+            ) : (
+              ""
+            )}
           </div>
         ) : (
-          <>
-            <a href="/">Sign in</a>
-            <a href="/" className="register">
+          <div className="user">
+            <Link className="profile" to="/login">
+              Sign in
+            </Link>
+            <Link to="/register" className="profile">
               Sign up
-            </a>
-          </>
+            </Link>
+          </div>
         )}
         <div className="menuIcon">
           <img
@@ -54,12 +61,19 @@ function Navbar() {
           />
         </div>
         <div className={open ? "menu active" : "menu"}>
-          <a href="/">Home</a>
-          <a href="/">About</a>
-          <a href="/">Contact</a>
-          <a href="/">Agents</a>
-          <a href="/">Sign in</a>
-          <a href="/">Sign up</a>
+          <Link to="/">Home</Link>
+          <Link to="/">About</Link>
+          <Link to="/">Contact</Link>
+          <Link to="/">Agents</Link>
+
+          {!currentUser ? (
+            <>
+              <Link to="/">Sign in</Link>
+              <Link to="/">Sign up</Link>
+            </>
+          ) : (
+            <Link to="/profile">profile</Link>
+          )}
         </div>
       </div>
     </nav>

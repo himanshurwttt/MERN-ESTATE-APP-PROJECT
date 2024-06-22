@@ -12,6 +12,6 @@ model User {
   email     String   @unique
   username  String   @unique
   password  String
-  avatart   String?
+  avatar    String?
   createdAt DateTime @default(now())
 }

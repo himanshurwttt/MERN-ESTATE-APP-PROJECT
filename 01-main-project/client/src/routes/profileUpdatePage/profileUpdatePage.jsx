@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import "./profileUpdatePage.scss";
+import { AuthContext } from "../../context/AuthContext";
 
 function ProfileUpdatePage() {
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <div className="profileUpdatePage">
       <div className="formContainer">
@@ -12,6 +16,7 @@ function ProfileUpdatePage() {
               id="username"
               name="username"
               type="text"
+              defaultValue={currentUser.username}
             />
           </div>
           <div className="item">
@@ -20,6 +25,7 @@ function ProfileUpdatePage() {
               id="email"
               name="email"
               type="email"
+              defaultValue={currentUser.email}
             />
           </div>
           <div className="item">
@@ -30,7 +36,15 @@ function ProfileUpdatePage() {
         </form>
       </div>
       <div className="sideContainer">
-        <img src="" alt="" className="avatar" />
+        <img
+          src={
+            currentUser.avatar ||
+            "https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg?size=626&ext=jpg&ga=GA1.1.1757842217.1718464723&semt=ais_user"
+          }
+          alt=""
+          className="avatar"
+          defaultValue={currentUser.avatar}
+        />
       </div>
     </div>
   );

@@ -33,7 +33,6 @@ function Login() {
       if (res.ok) {
         updateUser(data);
         navigate("/");
-        console.log(data);
       } else {
         setError(data.message);
       }

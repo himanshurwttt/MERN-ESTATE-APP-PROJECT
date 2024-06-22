@@ -3,6 +3,7 @@
 .homePage {
   display: flex;
   height: 100%;
+  overflow: hidden;
 
   .textContainer {
     flex: 3;
