@@ -2,18 +2,17 @@ import { useContext } from "react";
 import Chat from "../../components/chat/Chat";
 import List from "../../components/list/List";
 import "./profilePage.scss";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 function ProfilePage() {
   const navigate = useNavigate();
-  const location = useLocation();
-  console.log(location.pathname);
   const { updateUser, currentUser } = useContext(AuthContext);
 
   const handleLogOut = async () => {
-    await fetch(`http://localhost:8800/api/auth/logout`, {
+    await fetch(`/api/auth/logout`, {
       method: "POST",
+      credentials: "include",
     });
     localStorage.removeItem("user");
     updateUser(null);

@@ -16,7 +16,7 @@ function Register() {
     const email = formdata.get("email");
     const password = formdata.get("password");
     try {
-      const res = await fetch(`http://localhost:8800/api/auth/register`, {
+      const res = await fetch(`/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,6 +26,7 @@ function Register() {
           email,
           password,
         }),
+        credentials: "include",
       });
       const data = await res.json();
       if (res.ok) {

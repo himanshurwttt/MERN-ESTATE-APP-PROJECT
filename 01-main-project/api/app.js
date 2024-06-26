@@ -5,7 +5,12 @@ import authRoute from "./routes/auth.route.js";
 import userRoute from "./routes/user.route.js";
 const app = express();
 
-app.use(cors({ origin: process.env.CLIENT_URL, Credential: true }));
+// app.use(
+//   cors({
+//     origin: process.env.CLIENT_URL,
+//     credentials: true, // Allow credentials (cookies)
+//   })
+// );
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/test", (req, res, next) => {

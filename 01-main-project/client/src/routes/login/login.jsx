@@ -19,7 +19,7 @@ function Login() {
     const username = formdata.get("username");
     const password = formdata.get("password");
     try {
-      const res = await fetch(`http://localhost:8800/api/auth/login`, {
+      const res = await fetch(`/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,6 +28,7 @@ function Login() {
           username,
           password,
         }),
+        credentials: "include",
       });
       const data = await res.json();
       if (res.ok) {
