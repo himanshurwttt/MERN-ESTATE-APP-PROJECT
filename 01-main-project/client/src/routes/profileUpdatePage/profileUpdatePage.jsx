@@ -6,7 +6,7 @@ import UploadWidget from "../../components/upladWidget/UploadWidget";
 
 function ProfileUpdatePage() {
   const { currentUser, updateUser } = useContext(AuthContext);
-  const [avatar, setAvatar] = useState(currentUser.avatar);
+  const [avatar, setAvatar] = useState([]);
   const [error, setError] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ function ProfileUpdatePage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, email, password, avatar }),
+        body: JSON.stringify({ username, email, password, avatar: avatar[0] }),
         credentials: "include",
       });
       const data = await res.json();
@@ -78,7 +78,7 @@ function ProfileUpdatePage() {
       <div className="sideContainer">
         <img
           src={
-            avatar ||
+            avatar[0] ||
             "https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg?size=626&ext=jpg&ga=GA1.1.1757842217.1718464723&semt=ais_user"
           }
           alt=""
@@ -93,7 +93,7 @@ function ProfileUpdatePage() {
             maxImageFileSize: 5000000,
             folder: "avatars",
           }}
-          setAvatar={setAvatar}
+          setState={setAvatar}
         />
       </div>
     </div>
