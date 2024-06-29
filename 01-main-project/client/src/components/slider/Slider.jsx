@@ -47,6 +47,7 @@ function Slider({ images }) {
             src={image}
             alt=""
             key={index}
+            loading="lazy"
             onClick={() => setImageIndex(index + 1)}
           />
         ))}
